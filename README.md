@@ -1,8 +1,10 @@
-# quantitative_investment
+# 隔壁的前端页面
 
 > A Vue.js project
 
-## Build Setup
+
+## 食用方法
+首先你得装了nodejs
 
 ``` bash
 # install dependencies
