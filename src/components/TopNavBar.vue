@@ -9,16 +9,16 @@
             theme="dark"
         >
             <a-menu-item key="main">
-                <a href="/">主页</a>
+                <router-link to="/">主页</router-link>
             </a-menu-item>
             <a-menu-item key="account_book">
-                <a href="/account_book">记账本</a>
+                <router-link to="/account_book">记账本</router-link>
             </a-menu-item>
             <a-menu-item class="right" key="signup">
-                <a href="/signup">注册</a>
+                <router-link to="/signup">注册</router-link>
             </a-menu-item>
             <a-menu-item class="right" key="login">
-                <a href="/login">登录</a>
+                <router-link to="/login">登录</router-link>
             </a-menu-item>
         </a-menu>
     </a-layout-header>

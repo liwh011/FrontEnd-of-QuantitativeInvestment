@@ -7,20 +7,20 @@
             </div>
             <a-divider />
             <div>
-                <div style="display: flex; align-items: center">
-                    <div style="display: inline-block; flex: 1;">
-                        <h1>我的账户 ({{ summary.accounts.length }})</h1>
-                    </div>
-                    <div style="float: right; ">
-                        <h1><a href="/account_book/manage">管理</a></h1>
-                    </div>
-                </div>
-                <AccountSummary
-                    style="margin-bottom: 30px"
-                    v-for="account in summary.accounts"
-                    :key="account.name"
-                    :account="account"
-                />
+                <h1 style="display: inline;">我的账户 ({{ summary.accounts.length }})</h1>
+                <a-button style="float: right;"><router-link to="manage" append>管理</router-link></a-button>
+                <a-space
+                    direction="vertical"
+                    size="large"
+                    :style="{ width: '100%' }"
+                >
+                    <AccountSummary
+                        style=""
+                        v-for="account in summary.accounts"
+                        :key="account.name"
+                        :account="account"
+                    />
+                </a-space>
             </div>
         </template>
     </PageWithNavbar>
@@ -54,6 +54,7 @@ export default {
             accounts: [
                 {
                     name: "账本1",
+                    id: 123,
                     totalAsset: 0,
                     profit: 0,
                     xirr: 1.11,
@@ -62,6 +63,7 @@ export default {
                 },
                 {
                     name: "账本2",
+                    id: 12345,
                     totalAsset: 0,
                     profit: 0,
                     xirr: 1.11,
@@ -70,6 +72,7 @@ export default {
                 },
                 {
                     name: "账本3",
+                    id: 1234,
                     totalAsset: 0,
                     profit: 0,
                     xirr: 1.11,

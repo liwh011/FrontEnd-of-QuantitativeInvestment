@@ -9,27 +9,35 @@ import NotFound from '@/pages/NotFound'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'HelloWorld',
-      component: MainPage
-    },
-    {
-      path: '/account_book',
-      name: 'AccountBook',
-      component: AccountBook,
-    },
-    {
-      path: '/account_book/:bookID',
-      name: 'AccountBookDetail',
-      component: AccountBookDetail,
-    },
-    {
-      path: '*',
-      name: 'NotFound',
-      component: NotFound,
+    routes: [
+        {
+            path: '/',
+            name: 'HelloWorld',
+            component: MainPage
+        },
+        {
+            path: '/account_book',
+            name: 'AccountBook',
+            component: AccountBook,
+        },
+        {
+            path: '/account_book/:bookID',
+            name: 'AccountBookDetail',
+            component: AccountBookDetail,
+        },
+        {
+            path: '*',
+            name: 'NotFound',
+            component: NotFound,
+        }
+    ],
+    mode: 'history',
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return { x: 0, y: 0 }
+        }
     }
-  ],
-  mode: 'history',
+
 })

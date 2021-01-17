@@ -1,7 +1,9 @@
 <template>
     <!-- 总资产信息，在总帐本及各个账本的详情页面里显示 -->
     <div class="total-asset">
-        <a-card :style="{boxShadow: '0 2px 8px #f0f1f2', marginBottom: '10px'}">
+        <a-card
+            :style="{ boxShadow: '0 2px 8px #f0f1f2', marginBottom: '10px' }"
+        >
             <a-row>
                 <a-col :span="12">
                     <a-statistic title="总资产" :value="data.totalAsset">
@@ -20,15 +22,32 @@
             </a-row>
         </a-card>
         <a-row>
-            <a-col
+            <!-- <a-col
                 :span="12"
                 v-for="(value, name, index) in indicators"
                 :key="index"
             >
                 <a-statistic :title="name" :value="value">
-                    <!-- <template #suffix>
-                        <span>元</span>
-                    </template> -->
+                </a-statistic>
+            </a-col> -->
+            <a-col :span="12">
+                <a-statistic title="年化收益率" :value="data.xirr">
+                    <template #suffix><span></span></template>
+                </a-statistic>
+            </a-col>
+            <a-col :span="12">
+                <a-statistic title="夏普比" :value="data.sharpRatio">
+                    <template #suffix><span></span></template>
+                </a-statistic>
+            </a-col>
+            <a-col :span="12">
+                <a-statistic title="最大回撤" :value="data.maxDrawDown">
+                    <template #suffix><span></span></template>
+                </a-statistic>
+            </a-col>
+            <a-col :span="12">
+                <a-statistic title="年化波动率" :value="data.maxDrawDown">
+                    <template #suffix><span></span></template>
                 </a-statistic>
             </a-col>
         </a-row>
@@ -39,7 +58,7 @@
 <script>
 export default {
     name: "TotalAsset",
-    components: { },
+    components: {},
     props: ["data"],
     data() {
         return {

@@ -1,7 +1,7 @@
 <template>
     <!-- 用于显示单个账本概况的卡片 -->
     <a-card :title="account.name">
-        <template #extra><a href="#">详情</a></template>
+        <template #extra><router-link :to="String(account.id)" append>详情</router-link></template>
         <a-row>
             <a-col :span="12" v-for="(value, name) in account" :key="name">
                 <a-statistic :title="name" :value="value">
