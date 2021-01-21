@@ -11,10 +11,22 @@
             <!-- 该账本的详细投资记录 -->
             <h1 style="display: inline">投资记录</h1>
             <a-space :style="{ marginBottom: '10px', float: 'right' }">
-                <a-button>添加</a-button>
+                <a-button type="primary" @click="showAddRecordDlg"
+                    >添加</a-button
+                >
                 <a-button>
                     <router-link to="edit" append>编辑</router-link>
                 </a-button>
+                <!-- 点击添加按钮后弹出的对话框，装有表单 -->
+                <a-modal
+                    title="添加记录"
+                    :visible="addRecordDlg.visible"
+                    :confirm-loading="addRecordDlg.confirmLoading"
+                    @ok="handleOk"
+                    @cancel="handleCancel"
+                >
+                    <AddRecordForm ref="addRecordFormDlg" />
+                </a-modal>
             </a-space>
             <InvestmentRecordTable :records="detail.records" />
         </template>
@@ -25,13 +37,24 @@
 import PageWithNavbar from "../components/PageWithNavbarTemplate";
 import TotalAsset from "../components/TotalAsset";
 import InvestmentRecordTable from "../components/InvestmentRecordTable";
+import AddRecordForm from "../components/AddRecordForm";
 
 export default {
     name: "AccountBookDetail",
-    components: { PageWithNavbar, TotalAsset, InvestmentRecordTable },
+    components: {
+        PageWithNavbar,
+        TotalAsset,
+        InvestmentRecordTable,
+        AddRecordForm,
+    },
     data() {
         return {
             detail: {},
+            addRecordDlg: {
+                // 添加记录的对话框
+                visible: false,
+                confirmLoading: false,
+            },
         };
     },
     mounted() {
@@ -64,6 +87,45 @@ export default {
                 { date: 1552344565, cash: -157186 },
             ],
         };
+    },
+    methods: {
+        // 显示添加记录的对话框
+        showAddRecordDlg() {
+            this.addRecordDlg.visible = true;
+        },
+        // 隐藏添加记录的对话框
+        hideAddRecordDlg() {
+            this.addRecordDlg.visible = false;
+        },
+        // 点击对话框的确认按钮后，执行的回调函数
+        handleOk() {
+            const form = this.$refs.addRecordFormDlg.$refs.addRecordForm; // 表单组件的对象
+            form.validate((valid) => {
+                if (valid) {
+                    // 准备请求的数据
+                    let formData = { ...this.$refs.addRecordFormDlg.form };
+                    formData.date = Math.trunc(formData.date.valueOf() / 1000); // 将moment对象转换为时间戳，并去除毫秒部分
+
+                    // 发送请求
+                    this.addRecordDlg.confirmLoading = true;
+
+                    // 服务器返回成功
+                    this.addRecordDlg.confirmLoading = false; // 结束加载状态
+                    this.$message.success("添加成功！"); // 弹出顶部提示消息
+                    form.resetFields(); // 重置表单
+                    this.hideAddRecordDlg();
+                } else {
+                    console.log("error submit!!");
+                    return false;
+                }
+            });
+        },
+        // 点击对话框的确认按钮后，执行的回调函数
+        handleCancel(e) {
+            const form = this.$refs.addRecordFormDlg.$refs.addRecordForm; // 表单组件的对象
+            form.resetFields();
+            this.hideAddRecordDlg();
+        },
     },
 };
 </script>
