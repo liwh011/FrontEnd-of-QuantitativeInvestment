@@ -14,7 +14,7 @@ function setToken (token) {
  * 从local storage获取token
  * @returns {string} token
  */
-function getToken () {
+export function getToken () {
     return store.getters.token;
 }
 
@@ -37,4 +37,18 @@ export async function Login (username, password) {
     if (token) {
         setToken(token);
     }
+}
+
+/**
+ * 清除本地存储的token
+ */
+export function ClearToken () {
+    store.commit('ResetToken');
+}
+
+/**
+ * 重定向到登录页面
+ */
+export function RedirectToLogin () {
+    router.push({ name: 'Login' });
 }
