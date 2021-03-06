@@ -1,16 +1,18 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 // import Mock from './mock.js'
-import Vue from 'vue'
-import App from './App'
-import router from './router'
+import Vue from 'vue';
+import App from './App';
+import router from './router';
+import store from './common/storage';
+import { isLoggedIn } from './common/auth';
 
 // import 'ant-design-vue/dist/antd.css';
 // import Antd from 'ant-design-vue'
 // Vue.use(Antd);
 import {
-  Menu, Layout, Statistic, Card, Row, Col, Divider, Table, Tag, Button, Space, Modal, DatePicker, FormModel,
-  Input, Radio, ConfigProvider, InputNumber, message
+    Menu, Layout, Statistic, Card, Row, Col, Divider, Table, Tag, Button, Space, Modal, DatePicker, FormModel,
+    Input, Radio, ConfigProvider, InputNumber, message
 } from 'ant-design-vue';
 Vue.use(Menu);
 Vue.use(Layout);
@@ -31,53 +33,66 @@ Vue.use(Radio);
 Vue.use(ConfigProvider);
 Vue.use(InputNumber);
 Vue.use(message);
-
 Vue.prototype.$message = message;
 message.config({
-  duration: 2,
+    duration: 2,
 });
 
+// 本地化配置
 import moment from 'moment';
-import 'moment/locale/zh-cn'
+import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 
-
-Vue.config.productionTip = false
-
-
+// Vue初始化
+Vue.config.productionTip = false;
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
-})
+    el: '#app',
+    router,
+    components: { App },
+    template: '<App/>',
+    store,
+});
 
+// 路由导航配置
+router.beforeEach((to, from, next) => {
+    if (to.fullPath.indexOf('/login') === 0 && isLoggedIn()) {
+        next({ path: '/' });
+        return;
+    }
+    if (to.meta.needLogin && !isLoggedIn()) {
+        next({ path: '/login', query: { redirect: to.fullPath }});
+        return;
+    }
+    next();
+});
 
-
+// 日期配置
+// eslint-disable-next-line no-extend-native
 Date.prototype.format = function (format) {
-  /*
+    /*
    * eg:format="YYYY-MM-dd hh:mm:ss";
    */
-  var o = {
-    "M+": this.getMonth() + 1, // month
-    "d+": this.getDate(), // day
-    "h+": this.getHours(), // hour
-    "m+": this.getMinutes(), // minute
-    "s+": this.getSeconds(), // second
-    "q+": Math.floor((this.getMonth() + 3) / 3), // quarter
-    "S": this.getMilliseconds()
+    var o = {
+        'M+': this.getMonth() + 1, // month
+        'd+': this.getDate(), // day
+        'h+': this.getHours(), // hour
+        'm+': this.getMinutes(), // minute
+        's+': this.getSeconds(), // second
+        'q+': Math.floor((this.getMonth() + 3) / 3), // quarter
+        'S': this.getMilliseconds(),
     // millisecond
-  }
-  if (/(y+)/.test(format)) {
-    format = format.replace(RegExp.$1, (this.getFullYear() + "")
-      .substr(4 - RegExp.$1.length));
-  }
-  for (var k in o) {
-    if (new RegExp("(" + k + ")").test(format)) {
-      format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k]
-        : ("00" + o[k]).substr(("" + o[k]).length));
+    };
+    if (/(y+)/.test(format)) {
+        format = format.replace(RegExp.$1, (this.getFullYear() + '')
+            .substr(4 - RegExp.$1.length));
     }
-  }
-  return format;
+    for (var k in o) {
+        if (new RegExp('(' + k + ')').test(format)) {
+            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k]
+                : ('00' + o[k]).substr(('' + o[k]).length));
+        }
+    }
+    return format;
 }
+;

@@ -1,0 +1,22 @@
+{
+    "extends": [
+        "plugin:vue-libs/recommended"
+    ],
+    // 添加全局变量
+    "globals": {
+        "AMap": "readonly",
+        "MAP": "readonly",
+        "getLocation": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 8,
+        "sourceType": "module"
+    },
+    "rules": {
+        "indent": ["warn",4],
+        "semi": ["warn", "always"],
+        "comma-dangle": ["warn", {"arrays": "always-multiline",  "objects": "always-multiline"}],
+        "no-unused-vars": "warn",
+        "quotes": "warn"
+    }
+}

@@ -1,43 +1,49 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import AccountBook from '@/pages/AccountBook'
-import AccountBookDetail from '@/pages/AccountBookDetail'
-import MainPage from '@/pages/Main'
-import NotFound from '@/pages/NotFound'
+import Vue from 'vue';
+import Router from 'vue-router';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
     routes: [
         {
             path: '/',
             name: 'HelloWorld',
-            component: MainPage
+            component: () => import('@/pages/Main'),
+        },
+        {
+            path: '/login',
+            name: 'HelloWorld',
+            component: () => import('@/pages/Login'),
         },
         {
             path: '/account_book',
             name: 'AccountBook',
-            component: AccountBook,
+            component: () => import('@/pages/AccountBook'),
+            meta: {
+                needLogin: true,
+            },
         },
         {
             path: '/account_book/:bookID',
             name: 'AccountBookDetail',
-            component: AccountBookDetail,
+            component: () => import('@/pages/AccountBookDetail'),
+            meta: {
+                needLogin: true,
+            },
         },
         {
             path: '*',
             name: 'NotFound',
-            component: NotFound,
-        }
+            component: () => import('@/pages/NotFound'),
+        },
     ],
     mode: 'history',
-    scrollBehavior(to, from, savedPosition) {
+    scrollBehavior (to, from, savedPosition) {
         if (savedPosition) {
-            return savedPosition
+            return savedPosition;
         } else {
-            return { x: 0, y: 0 }
+            return { x: 0, y: 0 };
         }
-    }
+    },
 
-})
+});

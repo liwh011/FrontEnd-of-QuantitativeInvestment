@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import PageWithNavbar from "../components/PageWithNavbarTemplate";
+import PageWithNavbar from '../components/PageWithNavbarTemplate';
 
 export default {
-    name: "MainPage",
-    components: { PageWithNavbar, },
+    name: 'MainPage',
+    components: { PageWithNavbar },
 };
 </script>
