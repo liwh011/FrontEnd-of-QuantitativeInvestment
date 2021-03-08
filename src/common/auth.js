@@ -1,6 +1,6 @@
 import store from './storage';
 import router from '../router';
-import { Login as LoginApi } from '../api/api';
+import { login as loginApi } from '../api/api';
 
 /**
  * 在local storage存下token
@@ -31,8 +31,8 @@ export function isLoggedIn () {
  * @param  {string} username 用户名
  * @param  {string} password 密码
  */
-export async function Login (username, password) {
-    const data = await LoginApi(username, password);
+export async function login (username, password) {
+    const data = await loginApi(username, password);
     const token = data.token;
     if (token) {
         setToken(token);

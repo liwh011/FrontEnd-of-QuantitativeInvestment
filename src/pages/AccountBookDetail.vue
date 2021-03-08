@@ -11,21 +11,33 @@
             <!-- 该账本的详细投资记录 -->
             <h1 style="display: inline">投资记录</h1>
             <a-space :style="{ marginBottom: '10px', float: 'right' }">
-                <a-button type="primary" @click="showAddRecordDlg"
-                    >添加</a-button
-                >
+                <a-button type="primary" @click="showUpdateAssetDlg">
+                    更新总资产
+                </a-button>
+                <a-button @click="showAddRecordDlg">
+                    添加买卖记录
+                </a-button>
                 <a-button>
                     <router-link to="edit" append>编辑</router-link>
                 </a-button>
                 <!-- 点击添加按钮后弹出的对话框，装有表单 -->
                 <a-modal
-                    title="添加记录"
+                    title="添加买卖记录"
                     :visible="addRecordDlg.visible"
                     :confirm-loading="addRecordDlg.confirmLoading"
-                    @ok="handleOk"
-                    @cancel="handleCancel"
+                    @ok="handleAddRecordDlgOk"
+                    @cancel="handleAddRecordDlgCancel"
                 >
                     <AddRecordForm ref="addRecordFormDlg" />
+                </a-modal>
+                <a-modal
+                    title="更新总资产"
+                    :visible="updateAssetDlg.visible"
+                    :confirm-loading="updateAssetDlg.confirmLoading"
+                    @ok="updateAssetDlg.handleOk"
+                    @cancel="updateAssetDlg.handleCancel"
+                >
+                    
                 </a-modal>
             </a-space>
             <InvestmentRecordTable :records="detail.records" />
@@ -34,20 +46,21 @@
 </template>
 
 <script>
-import PageWithNavbar from "../components/PageWithNavbarTemplate";
-import TotalAsset from "../components/TotalAsset";
-import InvestmentRecordTable from "../components/InvestmentRecordTable";
-import AddRecordForm from "../components/AddRecordForm";
+import PageWithNavbar from '../components/PageWithNavbarTemplate';
+import TotalAsset from '../components/TotalAsset';
+import InvestmentRecordTable from '../components/InvestmentRecordTable';
+import AddRecordForm from '../components/AddRecordForm';
 
+import { addRecord } from "../api/api";
 export default {
-    name: "AccountBookDetail",
+    name: 'AccountBookDetail',
     components: {
         PageWithNavbar,
         TotalAsset,
         InvestmentRecordTable,
         AddRecordForm,
     },
-    data() {
+    data () {
         return {
             detail: {},
             addRecordDlg: {
@@ -57,7 +70,7 @@ export default {
             },
         };
     },
-    mounted() {
+    mounted () {
         this.detail = {
             totalAsset: 0,
             profit: 0,
@@ -90,20 +103,20 @@ export default {
     },
     methods: {
         // 显示添加记录的对话框
-        showAddRecordDlg() {
+        showAddRecordDlg () {
             this.addRecordDlg.visible = true;
         },
         // 隐藏添加记录的对话框
-        hideAddRecordDlg() {
+        hideAddRecordDlg () {
             this.addRecordDlg.visible = false;
         },
         // 点击对话框的确认按钮后，执行的回调函数
-        handleOk() {
+        handleAddRecordDlgOk () {
             const form = this.$refs.addRecordFormDlg.$refs.addRecordForm; // 表单组件的对象
             form.validate((valid) => {
                 if (valid) {
                     // 准备请求的数据
-                    let formData = { ...this.$refs.addRecordFormDlg.form };
+                    const formData = { ...this.$refs.addRecordFormDlg.form };
                     formData.date = Math.trunc(formData.date.valueOf() / 1000); // 将moment对象转换为时间戳，并去除毫秒部分
 
                     // 发送请求
@@ -111,17 +124,17 @@ export default {
 
                     // 服务器返回成功
                     this.addRecordDlg.confirmLoading = false; // 结束加载状态
-                    this.$message.success("添加成功！"); // 弹出顶部提示消息
+                    this.$message.success('添加成功！'); // 弹出顶部提示消息
                     form.resetFields(); // 重置表单
                     this.hideAddRecordDlg();
                 } else {
-                    console.log("error submit!!");
+                    console.log('error submit!!');
                     return false;
                 }
             });
         },
         // 点击对话框的确认按钮后，执行的回调函数
-        handleCancel(e) {
+        handleAddRecordDlgCancel (e) {
             const form = this.$refs.addRecordFormDlg.$refs.addRecordForm; // 表单组件的对象
             form.resetFields();
             this.hideAddRecordDlg();

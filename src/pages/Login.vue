@@ -27,7 +27,7 @@
 
 <script>
 import PageWithNavbarTemplate from '../components/PageWithNavbarTemplate.vue';
-import { Login } from '../common/auth';
+import { login } from '../common/auth';
 export default {
     name: 'AccountBook',
     components: {
@@ -75,7 +75,7 @@ export default {
     methods: {
         onLogin () {
             const form = this.form;
-            Login(form.username, form.password).then((data) => {
+            login(form.username, form.password).then((data) => {
                 this.$message.success('登陆成功！');
                 console.log(this.$route);
                 // 重定向到之前访问的页面

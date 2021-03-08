@@ -37,52 +37,54 @@
         <a-form-model-item ref="source" label="记录来源" prop="source">
             <a-input v-model="form.source" />
         </a-form-model-item>
+        <a-form-model-item ref="note" label="备注" prop="note">
+            <a-input v-model="form.note" />
+        </a-form-model-item>
     </a-form-model>
 </template>
 
-
-
 <script>
-import moment from "moment";
+import moment from 'moment';
 export default {
-    data() {
+    data () {
         return {
             labelCol: { span: 6 },
             wrapperCol: { span: 18 },
-            other: "",
+            other: '',
             form: {
                 source: undefined,
                 cash: 0,
-                date: moment(new Date(), "YYYY-MM-DD"),
-                type: "投入",
+                date: moment(new Date(), 'YYYY-MM-DD'),
+                type: '投入',
+                note: '',
             },
             rules: {
                 source: [
                     {
                         max: 20,
-                        message: "长度不得超过20个字符",
-                        trigger: "blur",
+                        message: '长度不得超过20个字符',
+                        trigger: 'blur',
                     },
                 ],
                 date: [
                     {
                         required: true,
-                        message: "请选择日期。",
-                        trigger: "blur",
+                        message: '请选择日期。',
+                        trigger: 'blur',
                     },
                 ],
                 type: [
                     {
                         required: true,
-                        message: "请选择类型。",
-                        trigger: "blur",
+                        message: '请选择类型。',
+                        trigger: 'blur',
                     },
                 ],
                 cash: [
                     {
                         required: true,
-                        message: "请输入金额。",
-                        trigger: "blur",
+                        message: '请输入金额。',
+                        trigger: 'blur',
                     },
                 ],
             },
@@ -91,12 +93,12 @@ export default {
     methods: {
         moment,
         // 重置表单
-        resetForm() {
+        resetForm () {
             this.$refs.addRecordForm.resetFields();
         },
         // 禁止选择今天以后的日期，供日期控件调用
-        disabledDate(current) {
-            return current && current > moment().endOf("day");
+        disabledDate (current) {
+            return current && current > moment().endOf('day');
         },
     },
 };

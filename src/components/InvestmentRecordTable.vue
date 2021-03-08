@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { QueryBookRecords } from "../api/api.js";
+import { queryBookRecords } from "../api/api.js";
 
 const columns = [
     {
@@ -68,7 +68,7 @@ export default {
     },
     mounted() {
         // const bookName = "aaaa";
-        // QueryBookRecords(bookName).then((data) => {
+        // queryBookRecords(bookName).then((data) => {
         //     data.sort((a, b) => a.date > b.date);
         //     this.records = data;
         // });

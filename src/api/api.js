@@ -5,7 +5,7 @@ import { get, post } from './http';
  * @param  {string} username 用户名
  * @param  {string} password 密码
  */
-export async function Login (username, password) {
+export async function login (username, password) {
     const param = {
         'username': username,
         'password': password,
@@ -18,7 +18,7 @@ export async function Login (username, password) {
  * 查询用户拥有的所有账本（账本过多时会分页）
  * @param  {number} page 页码
  */
-export async function QueryAccountBook (page) {
+export async function queryAccountBook (page) {
     const param = {
         'page': page || 1,
     };
@@ -30,7 +30,7 @@ export async function QueryAccountBook (page) {
  * 查询特定ID的账本
  * @param  {number} bookID 账本ID
  */
-export async function GetAnAccountBook (bookID) {
+export async function getAnAccountBook (bookID) {
     const param = {
         'book_id': bookID,
     };
@@ -42,7 +42,7 @@ export async function GetAnAccountBook (bookID) {
  * 新建账本
  * @param  {string} bookName 账本名称
  */
-export async function AddAccountBook (bookName) {
+export async function addAccountBook (bookName) {
     const param = {
         'book_name': bookName,
     };
@@ -55,7 +55,7 @@ export async function AddAccountBook (bookName) {
  * @param  {number} bookID 账本ID
  * @param  {number} page 页码
  */
-export async function QueryBookRecords (bookID, page) {
+export async function queryBookRecords (bookID, page) {
     const param = {
         'book_id': bookID,
         'page': page || 1,
@@ -72,7 +72,7 @@ export async function QueryBookRecords (bookID, page) {
  * @param  {0|1} type 投资类型（0为投入，1为收回）
  * @param  {string?} note 备注，可选
  */
-export async function AddRecord (bookID, cash, date, type, note) {
+export async function addRecord (bookID, cash, date, type, note) {
     const param = {
         'book_id': bookID,
         'cash': cash,
