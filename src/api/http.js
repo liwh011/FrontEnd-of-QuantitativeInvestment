@@ -35,7 +35,7 @@ axios.interceptors.response.use(
             ClearToken();
             RedirectToLogin();
         }
-        const errMsg = error.response.data.msg || error.response.status;
+        const errMsg = error.response.data.msg || `HTTP${error.response.status}错误：${error.response.statusText}`;
         Vue.prototype.$message.error(errMsg, 5);
         return Promise.reject(error.response);
     }
@@ -46,7 +46,7 @@ axios.interceptors.response.use(
  * @param  {string} url 接口网址
  * @param  {object} params url参数
  */
-export function get (url, params) {
+export function get(url, params) {
     return new Promise((resolve, reject) => {
         axios
             .get(url, {
@@ -64,7 +64,7 @@ export function get (url, params) {
  * @param  {string} url 接口网址
  * @param  {object} params 请求参数
  */
-export function post (url, params) {
+export function post(url, params) {
     return new Promise((resolve, reject) => {
         axios
             .post(url, params)

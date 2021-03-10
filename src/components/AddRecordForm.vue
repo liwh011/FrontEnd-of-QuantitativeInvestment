@@ -17,8 +17,8 @@
         </a-form-model-item>
         <a-form-model-item label="投资类型" prop="type">
             <a-radio-group v-model="form.type" >
-                <a-radio value="投入">投入</a-radio>
-                <a-radio value="收回">收回</a-radio>
+                <a-radio :value="recordType.transferIn">投入</a-radio>
+                <a-radio :value="recordType.transferOut">收回</a-radio>
             </a-radio-group>
         </a-form-model-item>
         <a-form-model-item label="金额" prop="cash">
@@ -45,9 +45,13 @@
 
 <script>
 import moment from 'moment';
+import { recordType } from '../common/enum';
 export default {
     data () {
         return {
+            // import的变量
+            recordType,
+            // 表单控件参数配置
             labelCol: { span: 6 },
             wrapperCol: { span: 18 },
             other: '',
@@ -55,10 +59,17 @@ export default {
                 source: undefined,
                 cash: 0,
                 date: moment(new Date(), 'YYYY-MM-DD'),
-                type: '投入',
+                type: recordType.transferIn,
                 note: '',
             },
             rules: {
+                note: [
+                    {
+                        max: 20,
+                        message: '长度不得超过20个字符',
+                        trigger: 'blur',
+                    },
+                ],
                 source: [
                     {
                         max: 20,

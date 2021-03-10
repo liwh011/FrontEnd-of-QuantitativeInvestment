@@ -76,7 +76,7 @@ export default {
         onLogin () {
             const form = this.form;
             login(form.username, form.password).then((data) => {
-                this.$message.success('登陆成功！');
+                this.$message.success('登录成功！');
                 console.log(this.$route);
                 // 重定向到之前访问的页面
                 this.$router.push({ path: this.$route.query.redirect || '/' });

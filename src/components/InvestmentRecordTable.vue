@@ -16,51 +16,51 @@
 </template>
 
 <script>
-import { queryBookRecords } from "../api/api.js";
+import { queryBookRecords } from '../api/api.js';
 
 const columns = [
     {
-        title: "日期",
-        dataIndex: "date",
-        key: "date",
-        customRender: (date, row, index) => date.format("yyyy-MM-dd"),
-        defaultSortOrder: "descend",
+        title: '日期',
+        dataIndex: 'date',
+        key: 'date',
+        customRender: (date, row, index) => date.format('yyyy-MM-dd'),
+        defaultSortOrder: 'descend',
         sorter: (a, b) => new Date(a.date) - new Date(b.date),
     },
     {
-        title: "类型",
-        dataIndex: "type",
-        key: "type",
+        title: '类型',
+        dataIndex: 'type',
+        key: 'type',
         width: 80,
-        scopedSlots: { customRender: "type" },
+        scopedSlots: { customRender: 'type' },
         filters: [
             {
-                text: "投入",
-                value: "投入",
+                text: '投入',
+                value: '投入',
             },
             {
-                text: "收回",
-                value: "收回",
+                text: '收回',
+                value: '收回',
             },
         ],
         onFilter: (value, record) => record.type.indexOf(value) === 0,
     },
     {
-        title: "金额",
-        dataIndex: "cash",
-        key: "cash",
+        title: '金额',
+        dataIndex: 'cash',
+        key: 'cash',
     },
     {
-        title: "来源",
-        dataIndex: "src",
-        key: "src",
-        scopedSlots: { customRender: "src" },
+        title: '来源',
+        dataIndex: 'src',
+        key: 'src',
+        scopedSlots: { customRender: 'src' },
     },
 ];
 
 export default {
-    name: "InvestmentRecordTable",
-    props: ["records"],
+    name: 'InvestmentRecordTable',
+    props: ['records'],
     data() {
         return {
             columns,
@@ -75,11 +75,11 @@ export default {
     },
     computed: {
         tableData() {
-            let result = [...this.records];
+            const result = [...this.records];
             for (let index = 0; index < result.length; index++) {
-                let element = result[index];
+                const element = result[index];
                 element.date = new Date(element.date * 1000);
-                element.type = element.cash < 0 ? "投入" : "收回";
+                element.type = element.cash < 0 ? '投入' : '收回';
                 element.cash = Math.abs(element.cash);
                 element.key = index;
             }
@@ -88,7 +88,6 @@ export default {
     },
 };
 </script>
-
 
 <style scoped>
 </style>
