@@ -44,16 +44,16 @@
 </template>
 
 <script>
-import PageWithNavbarTemplate from "../components/PageWithNavbarTemplate.vue";
-import ChangeAssetForm from "../components/ChangeAssetForm.vue";
-import TotalAsset from "../components/TotalAsset";
-import InvestmentRecordTable from "../components/InvestmentRecordTable";
-import AddRecordForm from "../components/AddRecordForm";
+import PageWithNavbarTemplate from '../components/PageWithNavbarTemplate.vue';
+import ChangeAssetForm from '../components/ChangeAssetForm.vue';
+import TotalAsset from '../components/TotalAsset';
+import InvestmentRecordTable from '../components/InvestmentRecordTable';
+import AddRecordForm from '../components/AddRecordForm';
 
-import { addRecord, changeTotalAsset, queryBookRecords } from "../api/api";
+import { addTransferRecord, changeTotalAsset, queryTransferRecords } from '../api/api';
 
 export default {
-    name: "AccountBookDetail",
+    name: 'AccountBookDetail',
     components: {
         TotalAsset,
         InvestmentRecordTable,
@@ -87,7 +87,7 @@ export default {
 
             ],
         };
-        queryBookRecords(this.$route.params.bookID, 0).then((data) => {
+        queryTransferRecords(this.$route.params.bookID, 0).then((data) => {
             this.detail.records = data.data.records;
         });
     },
@@ -114,7 +114,7 @@ export default {
 
                     // 发送请求
                     this.addRecordDlg.confirmLoading = true;
-                    addRecord(
+                    addTransferRecord(
                         this.$route.params.bookID,
                         formData.cash,
                         formData.date,
@@ -124,16 +124,16 @@ export default {
                         .then((data) => {
                             // 服务器返回成功
                             this.addRecordDlg.confirmLoading = false; // 结束加载状态
-                            this.$message.success("添加成功！"); // 弹出顶部提示消息
+                            this.$message.success('添加成功！'); // 弹出顶部提示消息
                             form.resetFields(); // 重置表单
                             this.hideAddRecordDlg();
                         })
                         .catch(() => {
-                            this.$message.error("添加记录失败！");
+                            this.$message.error('添加记录失败！');
                             this.addRecordDlg.confirmLoading = false;
                         });
                 } else {
-                    console.log("提交表单时未通过校验。");
+                    console.log('提交表单时未通过校验。');
                     return false;
                 }
             });
@@ -177,15 +177,15 @@ export default {
                         .then((data) => {
                             // 服务器返回成功
                             this.changeAssetDlg.confirmLoading = false; // 结束加载状态
-                            this.$message.success("添加成功！"); // 弹出顶部提示消息
+                            this.$message.success('添加成功！'); // 弹出顶部提示消息
                             form.resetFields(); // 重置表单
                             this.hideChangeAssetDlg();
                         })
                         .catch(() => {
                             this.changeAssetDlg.confirmLoading = false; // 结束加载状态
-                        })
+                        });
                 } else {
-                    console.log("提交表单时未通过校验。");
+                    console.log('提交表单时未通过校验。');
                     return false;
                 }
             });

@@ -52,28 +52,42 @@ export async function addAccountBook(bookName) {
 }
 
 /**
- * 在某本账本中查询投资记录
+ * 在某本账本中查询转账记录
  * @param  {number} bookID 账本ID
  * @param  {number} page 页码
  */
-export async function queryBookRecords(bookID, page) {
+export async function queryTransferRecords(bookID, page) {
     const param = {
         'book_id': bookID,
         'page': page || 1,
     };
-    const response = await get('/v1/record', param);
+    const response = await get('/v1/record/transfer-history', param);
     return response.data;
 }
 
 /**
- * 在某账本中添加一条投资记录
+ * 在某本账本中查询总资产变更记录
+ * @param  {number} bookID 账本ID
+ * @param  {number} page 页码
+ */
+export async function queryAssetRecords(bookID, page) {
+    const param = {
+        'book_id': bookID,
+        'page': page || 1,
+    };
+    const response = await get('/v1/record/asset-history', param);
+    return response.data;
+}
+
+/**
+ * 在某账本中添加一条转账记录
  * @param  {number} bookID 目标账本ID
  * @param  {number} cash 金额
  * @param  {number} date 日期（时间戳，毫秒为小数部分）
  * @param  {0|1} type 投资类型（0为投入，1为收回）
  * @param  {string?} note 备注，可选
  */
-export async function addRecord(bookID, cash, date, type, note) {
+export async function addTransferRecord(bookID, cash, date, type, note) {
     const param = {
         'book_id': bookID,
         'cash': cash,
@@ -81,7 +95,7 @@ export async function addRecord(bookID, cash, date, type, note) {
         'type': type,
         'note': note,
     };
-    const response = await post('/v1/record/add', param);
+    const response = await post('/v1/record/transfer', param);
     return response.data;
 }
 
@@ -95,12 +109,12 @@ export async function addRecord(bookID, cash, date, type, note) {
 export async function changeTotalAsset(bookID, asset, date, note) {
     const param = {
         'book_id': bookID,
-        'cash': asset,
+        'asset': asset,
         'date': date,
-        'type': recordType.assetChange,
         'note': note,
     };
-    const response = await post('/v1/record/add', param);
+    const response = await post('/v1/record/change-asset', param);
     return response.data;
 }
+
 

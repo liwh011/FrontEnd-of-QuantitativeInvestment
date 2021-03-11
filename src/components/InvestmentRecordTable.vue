@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { queryBookRecords } from '../api/api.js';
+import { queryTransferRecords } from '../api/api.js';
 import { recordType } from '../common/enum.js';
 
 const columns = [
@@ -69,7 +69,7 @@ export default {
     },
     mounted() {
         // const bookName = "aaaa";
-        // queryBookRecords(bookName).then((data) => {
+        // queryTransferRecords(bookName).then((data) => {
         //     data.sort((a, b) => a.date > b.date);
         //     this.records = data;
         // });
