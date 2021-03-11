@@ -17,6 +17,7 @@
 
 <script>
 import { queryBookRecords } from '../api/api.js';
+import { recordType } from '../common/enum.js';
 
 const columns = [
     {
@@ -79,8 +80,7 @@ export default {
             for (let index = 0; index < result.length; index++) {
                 const element = result[index];
                 element.date = new Date(element.date * 1000);
-                element.type = element.cash < 0 ? '投入' : '收回';
-                element.cash = Math.abs(element.cash);
+                element.type = element.type === recordType.transferIn ? '投入' : '收回';
                 element.key = index;
             }
             return result;

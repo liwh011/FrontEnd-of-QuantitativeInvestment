@@ -107,7 +107,7 @@ export default {
             ],
         };
         queryBookRecords(this.$route.params.bookID, 0).then((data) => {
-            this.detail.records = data.records;
+            this.detail.records = data.data.records;
         });
     },
     methods: {

@@ -16,9 +16,9 @@
 
 <script>
 export default {
-    name: "AccountSummary",
+    name: 'AccountSummary',
     components: { },
-    props: ["account"],
+    props: ['account'],
 };
 </script>
 

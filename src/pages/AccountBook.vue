@@ -26,14 +26,14 @@
     </PageWithNavbar>
 </template>
 
-
 <script>
-import PageWithNavbar from "../components/PageWithNavbarTemplate";
-import TotalAsset from "../components/TotalAsset";
-import AccountSummary from "../components/AccountSummary";
+import PageWithNavbar from '../components/PageWithNavbarTemplate';
+import TotalAsset from '../components/TotalAsset';
+import AccountSummary from '../components/AccountSummary';
+import { queryAccountBook } from '../api/api';
 
 export default {
-    name: "AccountBook",
+    name: 'AccountBook',
     components: {
         PageWithNavbar,
         TotalAsset,
@@ -52,35 +52,39 @@ export default {
             sharpRatio: 1.14,
             maxDrawDown: 12345,
             accounts: [
-                {
-                    name: "账本1",
-                    id: 123,
-                    totalAsset: 0,
-                    profit: 0,
-                    xirr: 1.11,
-                    sharpRatio: 1.14,
-                    maxDrawDown: 12345,
-                },
-                {
-                    name: "账本2",
-                    id: 12345,
-                    totalAsset: 0,
-                    profit: 0,
-                    xirr: 1.11,
-                    sharpRatio: 1.14,
-                    maxDrawDown: 12345,
-                },
-                {
-                    name: "账本3",
-                    id: 1234,
-                    totalAsset: 0,
-                    profit: 0,
-                    xirr: 1.11,
-                    sharpRatio: 1.14,
-                    maxDrawDown: 12345,
-                },
+                // {
+                //     name: '账本1',
+                //     id: 123,
+                //     totalAsset: 0,
+                //     profit: 0,
+                //     xirr: 1.11,
+                //     sharpRatio: 1.14,
+                //     maxDrawDown: 12345,
+                // },
+                // {
+                //     name: '账本2',
+                //     id: 12345,
+                //     totalAsset: 0,
+                //     profit: 0,
+                //     xirr: 1.11,
+                //     sharpRatio: 1.14,
+                //     maxDrawDown: 12345,
+                // },
+                // {
+                //     name: '账本3',
+                //     id: 1234,
+                //     totalAsset: 0,
+                //     profit: 0,
+                //     xirr: 1.11,
+                //     sharpRatio: 1.14,
+                //     maxDrawDown: 12345,
+                // },
             ],
         };
+        queryAccountBook(1).then(data => {
+            const accountBooks = data.data.account_books;
+            this.summary.accounts = accountBooks;
+        });
     },
 };
 </script>
