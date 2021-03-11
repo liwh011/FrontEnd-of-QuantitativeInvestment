@@ -19,11 +19,11 @@ export async function login(username, password) {
  * 查询用户拥有的所有账本（账本过多时会分页）
  * @param  {number} page 页码
  */
-export async function queryAccountBook(page) {
+export async function queryAllAccountBook(page) {
     const param = {
         'page': page || 1,
     };
-    const response = await get('/v1/account_book', param);
+    const response = await get('/v1/account-book/books', param);
     return response.data;
 }
 
@@ -35,7 +35,7 @@ export async function getAnAccountBook(bookID) {
     const param = {
         'book_id': bookID,
     };
-    const response = await get('/v1/account_book', param);
+    const response = await get('/v1/account-book/book', param);
     return response.data;
 }
 
@@ -47,7 +47,7 @@ export async function addAccountBook(bookName) {
     const param = {
         'book_name': bookName,
     };
-    const response = await get('/v1/account_book/add', param);
+    const response = await get('/v1/account-book/add', param);
     return response.data;
 }
 

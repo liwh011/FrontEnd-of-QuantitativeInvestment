@@ -30,7 +30,7 @@
 import PageWithNavbar from '../components/PageWithNavbarTemplate';
 import TotalAsset from '../components/TotalAsset';
 import AccountSummary from '../components/AccountSummary';
-import { queryAccountBook } from '../api/api';
+import { queryAllAccountBook } from '../api/api';
 
 export default {
     name: 'AccountBook',
@@ -81,7 +81,7 @@ export default {
                 // },
             ],
         };
-        queryAccountBook(1).then(data => {
+        queryAllAccountBook(1).then(data => {
             const accountBooks = data.data.account_books;
             this.summary.accounts = accountBooks;
         });

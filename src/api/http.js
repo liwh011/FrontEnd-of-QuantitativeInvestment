@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Vue from 'vue';
 import { isLoggedIn, getToken, ClearToken, RedirectToLogin } from '../common/auth';
+import { rspCodeStatus } from '../common/enum';
 
 axios.defaults.baseURL = 'http://localhost:5000/';
 // axios.defaults.baseURL = 'http://localhost:8080/'
@@ -21,12 +22,12 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     // 2XX开头的状态码
     response => {
-        return Promise.resolve(response);
-        // if (response.status === 200) {
-        //     return Promise.resolve(response);
-        // } else {
-        //     return Promise.reject(response);
-        // }
+        if (response.data.code === rspCodeStatus.sucess) {
+            return Promise.resolve(response);
+        }
+        const errMsg = response.data.msg || `发生错误：${response.data.code}`;
+        Vue.prototype.$message.error(errMsg, 5);
+        return Promise.reject(response);
     },
     // 其他状态码
     error => {
